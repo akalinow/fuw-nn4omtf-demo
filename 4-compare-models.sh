@@ -2,6 +2,5 @@
 
 . paths.sh
 
-# `test` option not ready yet
-# omtfrunner test ${DATASET} ${NETS}/*
-echo "Nope..."
+omtfrunner --test -v ${DATASET} ${NETS}/*
+

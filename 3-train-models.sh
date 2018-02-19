@@ -1,5 +1,6 @@
 #!/bin/bash
 
 . paths.sh
+rm -fr ${TRAIN_LOG}
 
-omtfrunner train -v --sess_prefix demo --logs ${TRAIN_LOG} --batch_size 1000 --reps 2 ${DATASET} ${NETS}/*
+omtfrunner -v --sess_prefix demo --logs ${TRAIN_LOG} --steps 101 --batch_size 1000 --reps 1 ${DATASET} ${NETS}/*
