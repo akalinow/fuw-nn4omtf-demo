@@ -2,6 +2,11 @@
 
 . paths.sh
 
+if [ -e "${NETS}" ]; then
+  echo "Deleting old models..."
+  rm -fr ${NETS}
+fi
+
 omtfnntool storage ${FULL_STORE} ${NETS}
 
 omtfnntool storage ${REDUCED_STORE} ${NETS}
