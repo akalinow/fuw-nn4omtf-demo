@@ -2,4 +2,4 @@
 
 . paths.sh
 
-tensorboard --logsdir ${TRAIN_LOG}
+tensorboard --logdir ${TRAIN_LOG}
