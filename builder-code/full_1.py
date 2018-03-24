@@ -5,6 +5,7 @@ from nn4omtf.dataset.const import HITS_TYPE
 def create_nn():
     arr = [5, 10, 16, 50, 100, 500]
     l = len(arr) + 1
+    sgn_l = 2
     FL = 12
     SL = 24
     x = tf.placeholder(tf.float32, [None, 18, 14])
@@ -24,10 +25,16 @@ def create_nn():
         utils.add_summary(W_fc2, add_hist=False)
 
     # Map the features on classes
-    with tf.name_scope('fc3'):
+    with tf.name_scope('fc3_pt'):
         W_fc3 = utils.weight_variable([SL, l])
         b_fc3 = utils.bias_variable([l])
-        y = tf.matmul(h_fc2, W_fc3) + b_fc3
+        y_pt = tf.matmul(h_fc2, W_fc3) + b_fc3
     
-    return x, y, arr, HITS_TYPE.FULL
+    # Map the features on classes
+    with tf.name_scope('fc3_sgn'):
+        W_fc3_sgn = utils.weight_variable([SL, sgn_l])
+        b_fc3_sgn = utils.bias_variable([sgn_l])
+        y_sgn = tf.matmul(h_fc2, W_fc3_sgn) + b_fc3_sgn
+    
+    return x, y_pt, y_sgn, arr, HITS_TYPE.FULL
 

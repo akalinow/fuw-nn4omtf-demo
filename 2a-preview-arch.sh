@@ -2,4 +2,4 @@
 
 . paths.sh
 
-google-chrome ${NETS}/ex/preview.html ${NETS}/*/nets/*/preview.html
+google-chrome ${NETS}/*/nets/*/preview.html
