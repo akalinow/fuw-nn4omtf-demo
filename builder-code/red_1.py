@@ -3,7 +3,7 @@ from nn4omtf import utils
 from nn4omtf.dataset.const import HITS_TYPE 
 
 def create_nn():
-    arr = [5, 10, 16, 50, 100, 500]
+    arr = [2, 5, 10, 12.5, 15, 20, 25, 30]
     l = len(arr) + 1
     l_sgn = 2
     FL = 12
