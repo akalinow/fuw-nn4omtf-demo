@@ -1,39 +1,26 @@
 import tensorflow as tf
 from nn4omtf import utils
-from nn4omtf.dataset.const import HITS_TYPE 
+from nn4omtf.dataset.const import HITS_TYPE
+from nn4omtf.network import SIGN_OUT_SZ
 
 def create_nn():
-    arr = [2, 5, 10, 12.5, 15, 20, 25, 30]
+    arr = [0, 5, 10, 15, 20, 25, 30]
     l = len(arr) + 1
-    l_sgn = 2
-    FL = 12
-    SL = 24
+    in_sz = 36 # because 36 = 18 * 2 -> HITS_REDUCED size
+    ls_pt = [in_sz, 64, 32, l]
+    ls_sgn = [in_sz, 32, 16, SIGN_OUT_SZ]
     x = tf.placeholder(tf.float32, [None, 18, 2])
-    rx = tf.reshape(x, [-1, 36])
-    with tf.name_scope("fc1"):
-        # First layer, fully-connected
-        W_fc1 = utils.weight_variable([36, FL])
-        b_fc1 = utils.bias_variable([FL])
-        h_fc1 = tf.nn.relu(tf.matmul(rx, W_fc1) + b_fc1)
-        utils.add_summary(W_fc1, add_hist=False)
-
-    with tf.name_scope("fc2"):
-        # Second layer, fully-connected
-        W_fc2 = utils.weight_variable([FL, SL])
-        b_fc2 = utils.bias_variable([SL])
-        h_fc2 = tf.nn.relu(tf.matmul(h_fc1, W_fc2) + b_fc2)
-        utils.add_summary(W_fc2, add_hist=False)
-
-    # Map the features on classes
-    with tf.name_scope('fc3'):
-        W_fc3 = utils.weight_variable([SL, l])
-        b_fc3 = utils.bias_variable([l])
-        y_pt = tf.matmul(h_fc2, W_fc3) + b_fc3
+    rx = tf.reshape(x, [-1, in_sz])
     
-    with tf.name_scope('fc3_sgn'):
-        W_fc3_sgn = utils.weight_variable([SL, l_sgn])
-        b_fc3_sgn = utils.bias_variable([l_sgn])
-        y_sgn = tf.matmul(h_fc2, W_fc3_sgn) + b_fc3_sgn
+    y = rx
+    for sz in ls_pt[1:-1]:
+        y = utils.mk_fc_layer(y, sz, act_fn=tf.nn.relu)
+    y_pt = utils.mk_fc_layer(y, ls_pt[-1])
     
+    y = rx
+    for sz in ls_sgn[1:-1]:
+        y = utils.mk_fc_layer(y, sz, act_fn=tf.nn.relu)
+    y_sgn = utils.mk_fc_layer(y, ls_sgn[-1])
+
     return x, y_pt, y_sgn, arr, HITS_TYPE.REDUCED
 
