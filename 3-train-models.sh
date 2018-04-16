@@ -5,4 +5,4 @@ rm -fr ${TRAIN_LOG}
 
 echo ${DATASET}
 
-omtfrunner -v --sess_prefix demo --logdir ${TRAIN_LOG} --learning_rate 0.03 --batch_size 100 --epochs 1 ${DATASET} ${NETS}/*
+omtfrunner train -vv -lim 5000 -a 50 --sess_prefix demo --logdir ${TRAIN_LOG} --learning_rate 0.002 --batch_size 300 --epochs 5 ${DATASET} ${NETS}/*
