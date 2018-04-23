@@ -1,4 +1,13 @@
 # nn4omtf demo & tutorial
+
+## NOTICE
+[23.04.18]
+Due to many changes in main package, some scripts are outdated now.
+Other features are also available.
+This demo and tutorial scripts will be updated at the end.
+
+---
+
 Small demo for [nn4omtf](https://github.com/jlysiak/fuw-nn4omtf) package and its 
 command line tools [fuw-nn4omtf-cli](https://github.com/jlysiak/fuw-nn4omtf-cli).
 This demo doesn't contain original dataset in ROOT format nor any source `*.npz` 
