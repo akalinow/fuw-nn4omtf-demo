@@ -24,6 +24,9 @@ MODEL=test-model
 3-train-model:
 	omtfrunner train ${MODEL} --epochs 100 --time_limit 0:01:00
 
+3-train-model-gpu:
+	omtfrunner train ${MODEL} --epochs 100 --time_limit 0:01:00 --gpu
+
 4-test-model:
 	omtfrunner test ${MODEL} --note 'test' --suffix 'first-test' 
 
